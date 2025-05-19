@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Interaktif Legenda Sangkuriang - Kuis, timeline, dan peta digital" />
+    <meta name="keywords" content="cerita rakyat Sangkuriang, kuis Sangkuriang, timeline cerita, peta digital Gunung Tangkuban Perahu" />
+    <meta name="author" content="Sangkuriang Legend Website" />
+    <title>Interaktif Legenda Sangkuriang</title>
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <style>
+        .interactive-container {
+            padding: 2rem;
+            max-width: 900px;
+            margin: auto;
+        }
+        .quiz, .timeline, .map {
+            margin-bottom: 3rem;
+        }
+        .quiz-question {
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+        .quiz-options button {
+            display: block;
+            margin: 0.5rem 0;
+            padding: 0.5rem 1rem;
+            border: none;
+            background-color: #2e7d32;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .quiz-options button:hover {
+            background-color: #1b5e20;
+        }
+        .quiz-result {
+            margin-top: 1rem;
+            font-weight: bold;
+        }
+        .timeline {
+            border-left: 3px solid #2e7d32;
+            padding-left: 1rem;
+        }
+        .timeline-event {
+            margin-bottom: 1rem;
+        }
+        #map {
+            width: 100%;
+            height: 400px;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header class="sticky-header">
+        <nav class="navbar">
+            <div class="logo">Legenda Sangkuriang</div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="cerita.html">Baca Cerita</a></li>
+                <li><a href="tokoh.html">Tokoh</a></li>
+                <li><a href="budaya.html">Pesan Moral</a></li>
+                <li><a href="interaktif.html" class="active">Interaktif</a></li>
+            </ul>
+            <button id="darkModeToggle" aria-label="Toggle Dark Mode">🌙</button>
+        </nav>
+    </header>
+
+    <main class="interactive-container">
+        <h1>Interaktif Legenda Sangkuriang</h1>
+
+        <section class="quiz">
+            <h2>Kuis Trivia</h2>
+            <div class="quiz-question" id="quiz-question">Apa syarat Dayang Sumbi untuk menikah?</div>
+            <div class="quiz-options">
+                <button data-answer="salah">Sangkuriang harus membangun istana dalam satu malam</button>
+                <button data-answer="benar">Sangkuriang harus membendung sungai sebelum fajar</button>
+                <button data-answer="salah">Sangkuriang harus menangkap ikan emas</button>
+            </div>
+            <div class="quiz-result" id="quiz-result"></div>
+        </section>
+
+        <section class="timeline">
+            <h2>Timeline Alur Cerita</h2>
+            <div class="timeline-event"><strong>Awal Kisah:</strong> Kehidupan Dayang Sumbi dan Sangkuriang kecil.</div>
+            <div class="timeline-event"><strong>Konflik:</strong> Sangkuriang membunuh si Tumang & diusir.</div>
+            <div class="timeline-event"><strong>Tragedi:</strong> Pertemuan kembali, syarat yang mustahil, dan kutukan.</div>
+            <div class="timeline-event"><strong>Akhir:</strong> Lahirnya Gunung Tangkuban Perahu dan Danau Bandung.</div>
+        </section>
+
+        <section class="map">
+            <h2>Peta Digital Lokasi Legenda</h2>
+            <div id="map"></div>
+        </section>
+    </main>
+
+    <script src="assets/js/script.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY"></script>
+    <script>
+        // Quiz functionality
+        const quizOptions = document.querySelectorAll('.quiz-options button');
+        const quizResult = document.getElementById('quiz-result');
+
+        quizOptions.forEach(button => {
+            button.addEventListener('click', () => {
+                if (button.dataset.answer === 'benar') {
+                    quizResult.textContent = 'Benar! Sangkuriang harus membendung sungai sebelum fajar.';
+                    quizResult.style.color = '#2e7d32';
+                } else {
+                    quizResult.textContent = 'Salah. Coba lagi!';
+                    quizResult.style.color = '#b71c1c';
+                }
+            });
+        });
+
+        // Initialize Google Map
+        function initMap() {
+            const tangkubanPerahu = { lat: -6.7481, lng: 107.5228 };
+            const map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 12,
+                center: tangkubanPerahu,
+            });
+            const marker = new google.maps.Marker({
+                position: tangkubanPerahu,
+                map: map,
+                title: 'Gunung Tangkuban Perahu',
+            });
+        }
+
+        window.initMap = initMap;
+    </script>
+</body>
+</html>
